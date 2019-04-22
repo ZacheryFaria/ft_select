@@ -1,0 +1,15 @@
+libft/README.md
+libft/LICENSE
+obj/
+.vscode
+fillit
+.#*
+fillit2
+libft/obj
+libftprintf.a
+test/test.dSYM
+test/want.dSYM
+test/test
+pft/
+test/
+printftest
