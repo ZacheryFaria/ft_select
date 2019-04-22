@@ -1,6 +1,6 @@
 CC=gcc
-CFLAGS=-Werror -Wextra -Wall -g -Ilibft/ -I. -ofast -ggdb3 -funroll-loops
-LIBFLAGS=-L libft/ -lft -fsanitize=address
+CFLAGS=-Werror -Wextra -Wall -g -Ilibft/ -I.
+LIBFLAGS=-L libft/ -lft -fsanitize=address -lcurses
 NAME=ft_select
 SRC=$(wildcard src/*)
 OBJ=$(SRC:src/%.c=%.o)
