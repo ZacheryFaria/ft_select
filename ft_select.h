@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 14:35:37 by zfaria            #+#    #+#             */
-/*   Updated: 2019/04/22 17:27:12 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/04/22 18:56:57 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void				shell_exit(void);
 void				disable_raw_mode(void);
 void				enable_raw_mode(void);
 char				read_keypress(void);
-int					process_keypress(char c, char *tgb, t_list *list);
+int					process_keypress(char c, t_list *list);
 void				shell_read(t_list *list);
 char				*get_env(char *key);
 int					ft_printnbr(int nbr);

@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 14:24:39 by zfaria            #+#    #+#             */
-/*   Updated: 2019/04/22 16:48:16 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/04/22 19:23:49 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	main(int argc, char **argv, char **env)
 	sel = list->content;
 	sel->status |= ACTIVE;
 	g_env = arrdup(env);
-	shell_init();
 	shell_read(list);
 	disable_raw_mode();
 	print_selected(list);

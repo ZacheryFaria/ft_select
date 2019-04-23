@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 14:31:10 by zfaria            #+#    #+#             */
-/*   Updated: 2019/04/22 17:42:02 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/04/22 19:22:36 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	read_keypress(void)
 {
 	char c;
 
-	if (read(STDIN_FILENO, &c, 1) == -1)
+	if (read(0, &c, 1) == -1)
 		die("read");
 	return (c);
 }
@@ -171,20 +171,21 @@ void	print_selected(t_list *list)
 	}
 }
 
-int		process_keypress(char c, char *tgb, t_list *list)
+int		process_keypress(char c, t_list *list)
 {
 	char	seq[3];
 
+	ft_bzero(seq, 3);
 	if (c == 'q')
 		die("");
-	if (c == ' ')
+	else if (c == ' ')
 		set_selected(list);
-	if (c == 127)
+	else if (c == 127)
 		remove_selected(list);
-	if (c == '\x1b')
+	else if (c == '\x1b')
 	{
-		read(1, &seq[0], 1);
-		read(1, &seq[1], 1);
+		read(0, &seq[0], 1);
+		read(0, &seq[1], 1);
 		if (seq[0] != '[')
 			return (0);
 		if (seq[1] == 'D')
@@ -192,8 +193,8 @@ int		process_keypress(char c, char *tgb, t_list *list)
 		if (seq[1] == 'C')
 			move_right(list);
 	}
-	(void)tgb;
-	(void)list;
+	else
+		return (1);
 	return (0);
 }
 
@@ -201,21 +202,21 @@ void	write_options(t_list *list, char *tgb)
 {
 	t_select	*node;
 
-	ft_putstr(tgetstr("cl", &tgb));
+	ft_putstr_fd(tgetstr("cl", &tgb), 2);
 	while (list)
 	{
 		node = list->content;
 		if (node)
 		{
 			if (node->status & ACTIVE)
-				ft_printf("%s", US);
+				ft_fprintf(2, "%s", US);
 			if (node->status & SELECTED)
-				ft_printf("%s", MR);
+				ft_fprintf(2, "%s", MR);
 			if (!(node->status & HIDDEN))
-				ft_printf("%s", node->str);
-			ft_printf("%s%s", UE, ME);
+				ft_fprintf(2, "%s", node->str);
+			ft_fprintf(2, "%s%s", UE, ME);
 			if (!(node->status & HIDDEN))
-				ft_printf(" ");
+				ft_fprintf(2, " ");
 		}
 		list = list->next;
 	}
@@ -233,12 +234,13 @@ void	shell_read(t_list *list)
 	ret = 0;
 	while (1)
 	{
-		write_options(list, tgb);
+		if (ret == 0)
+			write_options(list, tgb);
 		c = read_keypress();
 		if (c == '\n')
 			break ;
-		if ((ret = process_keypress(c, tgb, list)))
-			break ;
+		ret = 1;
+		ret = process_keypress(c, list);
 	}
-	ft_printf(tgetstr("cl", &tgb));
+	ft_fprintf(2, tgetstr("cl", &tgb));
 }

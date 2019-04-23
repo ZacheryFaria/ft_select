@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 14:07:42 by zfaria            #+#    #+#             */
-/*   Updated: 2019/04/22 17:37:54 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/04/22 19:25:24 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,6 @@ void	die(char *str)
 	exit(1);
 }
 
-void	shell_init(void)
-{
-
-	g_state.curs_x = 0;
-	g_state.curs_y = 0;
-	g_state.hist = 0;
-}
-
 void	disable_raw_mode(void)
 {
 	tcsetattr(2, TCSAFLUSH, &g_state.orig_termios);
@@ -48,7 +40,7 @@ void	disable_raw_mode(void)
 
 int		ft_printnbr(int num)
 {
-	ft_putchar(num);
+	ft_putchar_fd(num, 2);
 	return (0);
 }
 
@@ -68,6 +60,6 @@ void	enable_raw_mode(void)
 	tcsetattr(2, TCSAFLUSH, &raw);
 	tgetent(NULL, get_env("TERM"));
 	setsignal();
-	ft_putstr(tgetstr("ti", &tgb));
-	ft_putstr(tgetstr("vi", &tgb));
+	ft_putstr_fd(tgetstr("ti", &tgb), 2);
+	ft_putstr_fd(tgetstr("vi", &tgb), 2);
 }
