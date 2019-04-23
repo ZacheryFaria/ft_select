@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 14:31:10 by zfaria            #+#    #+#             */
-/*   Updated: 2019/04/22 19:22:36 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/04/23 11:46:28 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,20 @@
 #define MR tgetstr("mr", &tgb)
 #define ME tgetstr("me", &tgb)
 
-char	read_keypress(void)
+t_shell	*get_shell(void)
 {
-	char c;
+	static t_shell shell;
 
-	if (read(0, &c, 1) == -1)
+	return (&shell);
+}
+
+long	read_keypress(void)
+{
+	long l;
+
+	if (read(0, &l, 8) == -1)
 		die("read");
-	return (c);
+	return (l);
 }
 
 void	move_left(t_list *list)
@@ -51,15 +58,13 @@ void	move_left(t_list *list)
 		if (sel->status & ACTIVE)
 		{
 			sel->status &= ~ACTIVE;
-			break ; 
+			break ;
 		}
+		if (!(sel->status & HIDDEN))
+			start++;
 		list = list->next;
-		start++;
 	}
-	if (start == 0)
-		start = ft_lstlen(orig) - 2;
-	else
-		start--;
+	start = !start ? ft_lstlen(orig) - 2 : start - 1;
 	list = orig;
 	while (start-- > 0)
 		list = list->next;
@@ -81,15 +86,12 @@ void	move_right(t_list *list)
 		if (sel->status & ACTIVE)
 		{
 			sel->status &= ~ACTIVE;
-			break ; 
+			break ;
 		}
 		list = list->next;
 		start++;
 	}
-	if (start == ft_lstlen(orig) - 2)
-		start = 0;
-	else
-		start++;
+	start = start == ft_lstlen(orig) - 2 ? 0 : start + 1;
 	list = orig;
 	while (start-- > 0)
 		list = list->next;
@@ -135,7 +137,7 @@ void	check_list(t_list *list)
 		list = list->next;
 	}
 	if (!ok)
-		die ("");
+		die("");
 }
 
 void	remove_selected(t_list *list)
@@ -171,28 +173,22 @@ void	print_selected(t_list *list)
 	}
 }
 
-int		process_keypress(char c, t_list *list)
+int		process_keypress(long c, t_list *list)
 {
-	char	seq[3];
-
-	ft_bzero(seq, 3);
 	if (c == 'q')
-		die("");
+		finish(1);
 	else if (c == ' ')
 		set_selected(list);
 	else if (c == 127)
 		remove_selected(list);
-	else if (c == '\x1b')
-	{
-		read(0, &seq[0], 1);
-		read(0, &seq[1], 1);
-		if (seq[0] != '[')
-			return (0);
-		if (seq[1] == 'D')
-			move_left(list);
-		if (seq[1] == 'C')
-			move_right(list);
-	}
+	else if (c == 0x445B1B || c == 0x415B1B)
+		move_left(list);
+	else if (c == 0x435B1B || c == 0x425B1B)
+		move_right(list);
+	else if (c == 27)
+		finish(1);
+	else if (c == 0x7E335B1B)
+		remove_selected(list);
 	else
 		return (1);
 	return (0);
@@ -225,22 +221,22 @@ void	write_options(t_list *list, char *tgb)
 void	shell_read(t_list *list)
 {
 	char	*tgb;
-	char	c;
-	int		ret;
+	long	c;
+	t_shell	*shell;
 
+	shell = get_shell();
 	enable_raw_mode();
 	tgetent(NULL, get_env("TERM"));
 	tgb = ft_memalloc(2048);
-	ret = 0;
+	shell->list = list;
+	shell->tgb = tgb;
 	while (1)
 	{
-		if (ret == 0)
-			write_options(list, tgb);
+		write_options(list, tgb);
 		c = read_keypress();
 		if (c == '\n')
 			break ;
-		ret = 1;
-		ret = process_keypress(c, list);
+		process_keypress(c, list);
 	}
 	ft_fprintf(2, tgetstr("cl", &tgb));
 }

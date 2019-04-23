@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 14:35:37 by zfaria            #+#    #+#             */
-/*   Updated: 2019/04/22 18:56:57 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/04/23 11:39:02 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct		s_hellstate
 	int				curs_y;
 	int				hist;
 	struct termios	orig_termios;
+	t_list			*list;
+	char			*tgb;
 }					t_shell;
 
 typedef struct		s_select
@@ -37,21 +39,23 @@ typedef struct		s_select
 #define				SELECTED (1 << 1)
 #define				ACTIVE (1 << 2)
 
-t_shell				g_state;
 char				**g_env;
 
 void				die(char *str);
 void				shell_init(void);
+t_shell				*get_shell(void);
 void				shell_exit(void);
+void				finish(int sig);
 void				disable_raw_mode(void);
 void				enable_raw_mode(void);
-char				read_keypress(void);
-int					process_keypress(char c, t_list *list);
+long				read_keypress(void);
+int					process_keypress(long c, t_list *list);
 void				shell_read(t_list *list);
 char				*get_env(char *key);
 int					ft_printnbr(int nbr);
 void				print_selected(t_list *list);
-void				setsignal();
+void				setsignal(void);
+void				write_options(t_list *list, char *tgb);
 
 #endif
 

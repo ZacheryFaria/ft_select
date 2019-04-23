@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 14:24:39 by zfaria            #+#    #+#             */
-/*   Updated: 2019/04/22 19:23:49 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/04/23 10:59:54 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char **argv, char **env)
 	t_list		*list;
 
 	if (argc == 1)
-		die ("Usage: ./ft_select (files)");
+		die("Usage: ./ft_select (files)");
 	i = argc - 1;
 	list = ft_lstnew(0, 0);
 	while (i > 0)

@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 16:59:48 by zfaria            #+#    #+#             */
-/*   Updated: 2019/04/22 17:31:56 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/04/23 11:11:18 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 void	finish(int s)
 {
 	(void)s;
-
 	disable_raw_mode();
 	exit(1);
 }
@@ -36,12 +35,14 @@ void	finish(int s)
 void	suspend(int s)
 {
 	char	buf[2];
+	t_shell	*shell;
 
 	(void)s;
+	shell = get_shell();
 	disable_raw_mode();
-	buf[0] = g_state.orig_termios.c_cc[VSUSP];
+	buf[0] = shell->orig_termios.c_cc[VSUSP];
 	buf[1] = 0;
-	tcsetattr(0, TCSADRAIN, &g_state.orig_termios);
+	tcsetattr(0, TCSADRAIN, &shell->orig_termios);
 	signal(SIGTSTP, SIG_DFL);
 	ioctl(2, TIOCSTI, buf);
 }
@@ -49,6 +50,7 @@ void	suspend(int s)
 void	restart(int s)
 {
 	char	buf[2];
+
 	(void)s;
 	enable_raw_mode();
 	buf[0] = -62;
@@ -56,9 +58,18 @@ void	restart(int s)
 	ioctl(2, TIOCSTI, buf);
 }
 
-void	setsignal()
+void	size_changed(int s)
 {
-	//signal(SIGWINCH, size_changed);
+	t_shell	*shell;
+
+	shell = get_shell();
+	(void)s;
+	write_options(shell->list, shell->tgb);
+}
+
+void	setsignal(void)
+{
+	signal(SIGWINCH, size_changed);
 	signal(SIGTSTP, suspend);
 	signal(SIGCONT, restart);
 	signal(SIGILL, finish);
