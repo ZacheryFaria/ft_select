@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 14:07:42 by zfaria            #+#    #+#             */
-/*   Updated: 2019/04/22 16:44:08 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/04/22 17:37:54 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,20 @@ int		ft_printnbr(int num)
 
 void	enable_raw_mode(void)
 {
-	struct termios raw;
+	struct termios	raw;
+	char			*tgb;
 
+	tgb = ft_memalloc(2048);
 	if (tcgetattr(2, &g_state.orig_termios) == -1)
 		die("tcgetattr");
 	raw = g_state.orig_termios;
-	//atexit(disable_raw_mode);
 	raw.c_lflag &= ~(ECHO | ICANON);
+	raw.c_oflag &= ~(OPOST);
 	raw.c_cc[VMIN] = 1;
 	raw.c_cc[VTIME] = 0;
 	tcsetattr(2, TCSAFLUSH, &raw);
-	ft_printf(tgetstr("ti", NULL));
-	ft_printf(tgetstr("vi", NULL));
+	tgetent(NULL, get_env("TERM"));
+	setsignal();
+	ft_putstr(tgetstr("ti", &tgb));
+	ft_putstr(tgetstr("vi", &tgb));
 }

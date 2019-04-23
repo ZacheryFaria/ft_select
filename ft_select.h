@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 14:35:37 by zfaria            #+#    #+#             */
-/*   Updated: 2019/04/22 16:48:10 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/04/22 17:27:12 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void				shell_read(t_list *list);
 char				*get_env(char *key);
 int					ft_printnbr(int nbr);
 void				print_selected(t_list *list);
+void				setsignal();
 
 #endif
 

@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 14:31:10 by zfaria            #+#    #+#             */
-/*   Updated: 2019/04/22 16:48:13 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/04/22 17:42:02 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,8 +227,8 @@ void	shell_read(t_list *list)
 	char	c;
 	int		ret;
 
-	tgetent(NULL, get_env("TERM"));
 	enable_raw_mode();
+	tgetent(NULL, get_env("TERM"));
 	tgb = ft_memalloc(2048);
 	ret = 0;
 	while (1)
