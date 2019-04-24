@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 20:13:24 by zfaria            #+#    #+#             */
-/*   Updated: 2019/04/24 12:30:06 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/04/24 13:40:52 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,5 @@ void	print_selected(t_list *list)
 			ft_printf("%s ", sel->str);
 		list = list->next;
 	}
+	ft_printf("\n");
 }
