@@ -21,7 +21,7 @@ all: $(NAME)
 	@mkdir -p obj
 	$(CC) $(CFLAGS) -o obj/$@ -c $<
 
-clean:
+clean: update
 	@make -C libft/ clean
 	@rm -rf obj/
 
