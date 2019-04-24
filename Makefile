@@ -19,7 +19,7 @@ all: $(NAME)
 
 %.o: %.c
 	@mkdir -p obj
-	@$(CC) $(CFLAGS) -o obj/$@ -c $<
+	$(CC) $(CFLAGS) -o obj/$@ -c $<
 
 clean:
 	@make -C libft/ clean
