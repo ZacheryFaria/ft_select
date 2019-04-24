@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 14:35:37 by zfaria            #+#    #+#             */
-/*   Updated: 2019/04/24 12:27:51 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/04/24 12:30:50 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ typedef struct		s_select
 	int				status;
 }					t_select;
 
-#define				HIDDEN (1 << 3)
-#define				SELECTED (1 << 1)
-#define				ACTIVE (1 << 2)
+# define HIDDEN (1 << 3)
+# define SELECTED (1 << 1)
+# define ACTIVE (1 << 2)
 
 char				**g_env;
 
@@ -71,4 +71,3 @@ void				set_selected(t_list *list);
 void				remove_selected(t_list **head, t_list *list, t_list *last);
 
 #endif
-
