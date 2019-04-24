@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 14:35:37 by zfaria            #+#    #+#             */
-/*   Updated: 2019/04/23 11:39:02 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/04/23 20:20:46 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,18 @@ void				finish(int sig);
 void				disable_raw_mode(void);
 void				enable_raw_mode(void);
 long				read_keypress(void);
-int					process_keypress(long c, t_list *list);
-void				shell_read(t_list *list);
+void				process_keypress(long c, t_list **list);
+void				shell_read(t_list **list);
 char				*get_env(char *key);
 int					ft_printnbr(int nbr);
 void				print_selected(t_list *list);
 void				setsignal(void);
 void				write_options(t_list *list, char *tgb);
+void				move_left(t_list *list);
+void				move_right(t_list *list);
+int					get_active_index(t_list *list);
+void				set_selected(t_list *list);
+void				remove_selected(t_list **head, t_list *list, t_list *last);
 
 #endif
 

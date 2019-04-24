@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 14:07:42 by zfaria            #+#    #+#             */
-/*   Updated: 2019/04/23 11:09:44 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/04/23 20:12:16 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	die(char *str)
 	exit(1);
 }
 
-void	init_shell(void)
+t_shell	*get_shell(void)
 {
-	t_shell *shell;
+	static t_shell	shell;
 
-	shell = get_shell();
+	return (&shell);
 }
 
 void	disable_raw_mode(void)
@@ -58,9 +58,11 @@ void	enable_raw_mode(void)
 {
 	struct termios	raw;
 	char			*tgb;
+	char			*ptr;
 	t_shell			*shell;
 
 	tgb = ft_memalloc(2048);
+	ptr = tgb;
 	shell = get_shell();
 	if (tcgetattr(2, &shell->orig_termios) == -1)
 		die("tcgetattr");
@@ -74,4 +76,5 @@ void	enable_raw_mode(void)
 	setsignal();
 	ft_putstr_fd(tgetstr("ti", &tgb), 2);
 	ft_putstr_fd(tgetstr("vi", &tgb), 2);
+	free(ptr);
 }

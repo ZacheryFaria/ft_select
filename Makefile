@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Werror -Wextra -Wall -g -Ilibft/ -I.
-LIBFLAGS=-L libft/ -lft -fsanitize=address -lcurses
+LIBFLAGS=-L libft/ -lft  -lcurses
 NAME=ft_select
 SRC=$(wildcard src/*)
 OBJ=$(SRC:src/%.c=%.o)
