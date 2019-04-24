@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 14:35:37 by zfaria            #+#    #+#             */
-/*   Updated: 2019/04/23 20:20:46 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/04/24 12:27:51 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 # include <termios.h>
 # include <libft.h>
 
+# define RED "\x1b[31m"
+# define GREEN "\x1b[32m"
+# define YELLOW "\x1b[33m"
+# define BLUE "\x1b[34m"
+# define MAGENTA "\x1b[35m"
+# define CYAN "\x1b[36m"
+# define WHITE "\x1b[37m"
 
 typedef struct		s_hellstate
 {
@@ -41,6 +48,7 @@ typedef struct		s_select
 
 char				**g_env;
 
+char				*get_color(char *str);
 void				die(char *str);
 void				shell_init(void);
 t_shell				*get_shell(void);

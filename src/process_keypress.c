@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 14:31:10 by zfaria            #+#    #+#             */
-/*   Updated: 2019/04/23 20:24:25 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/04/24 12:26:48 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	write_options(t_list *list, char *tgb)
 		node = list->content;
 		if (node)
 		{
+			ft_fprintf(2, get_color(node->str));
 			if (node->status & ACTIVE)
 				ft_fprintf(2, "%s", US);
 			if (node->status & SELECTED)
@@ -86,6 +87,7 @@ void	write_options(t_list *list, char *tgb)
 			ft_fprintf(2, "%s%s", UE, ME);
 			if (!(node->status & HIDDEN))
 				ft_fprintf(2, " ");
+			ft_fprintf(2, WHITE);
 		}
 		list = list->next;
 	}
