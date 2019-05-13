@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 14:07:42 by zfaria            #+#    #+#             */
-/*   Updated: 2019/05/08 10:37:19 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/05/13 11:16:30 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ void	die(char *str)
 t_shell	*get_shell(void)
 {
 	static t_shell	shell;
+	struct winsize	ws;
 
+	ioctl(0, TIOCGWINSZ, &ws);
+	shell.screen_rows = ws.ws_row;
+	shell.screen_cols = ws.ws_col;
 	return (&shell);
 }
 

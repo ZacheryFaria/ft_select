@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 14:31:10 by zfaria            #+#    #+#             */
-/*   Updated: 2019/05/08 10:38:22 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/05/13 12:21:40 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,26 +69,23 @@ void	process_keypress(long c, t_list **list)
 
 void	write_options(t_list *list, char *tgb)
 {
-	t_select	*node;
+	int			i;
+	int			rowc;
+	int			len;
 
 	ft_putstr_fd(tgetstr("cl", &tgb), 2);
+	len = get_longest(list);
+	rowc = amount_per_row(len, *get_shell()) - 1;
+	if (!can_fit(len, list, *get_shell()))
+	{
+		ft_fprintf(2, "Can't fit");
+		return ;
+	}
+	i = 0;
 	while (list)
 	{
-		node = list->content;
-		if (node)
-		{
-			ft_fprintf(2, get_color(node->str));
-			if (node->status & ACTIVE)
-				ft_fprintf(2, "%s", US);
-			if (node->status & SELECTED)
-				ft_fprintf(2, "%s", MR);
-			if (!(node->status & HIDDEN))
-				ft_fprintf(2, "%s", node->str);
-			ft_fprintf(2, "%s%s", UE, ME);
-			if (!(node->status & HIDDEN))
-				ft_fprintf(2, " ");
-			ft_fprintf(2, WHITE);
-		}
+		i++;
+		write_element(list->content, len, rowc, i);
 		list = list->next;
 	}
 }

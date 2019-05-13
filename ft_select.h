@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 14:35:37 by zfaria            #+#    #+#             */
-/*   Updated: 2019/04/24 12:30:50 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/05/13 12:33:08 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@ typedef struct		s_hellstate
 {
 	int				screen_rows;
 	int				screen_cols;
-	int				curs_x;
-	int				curs_y;
-	int				hist;
 	struct termios	orig_termios;
 	t_list			*list;
 	char			*tgb;
@@ -42,7 +39,6 @@ typedef struct		s_select
 	int				status;
 }					t_select;
 
-# define HIDDEN (1 << 3)
 # define SELECTED (1 << 1)
 # define ACTIVE (1 << 2)
 
@@ -69,5 +65,9 @@ void				move_right(t_list *list);
 int					get_active_index(t_list *list);
 void				set_selected(t_list *list);
 void				remove_selected(t_list **head, t_list *list, t_list *last);
+int					get_longest(t_list *args);
+int					amount_per_row(int longest, t_shell shell);
+int					can_fit(int longest, t_list *list, t_shell shell);
+void				write_element(t_select *node, int len, int rowc, int i);
 
 #endif
