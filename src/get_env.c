@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 14:44:26 by zfaria            #+#    #+#             */
-/*   Updated: 2019/04/22 14:46:12 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/05/13 14:32:30 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_env(char *key)
 	i = -1;
 	len = ft_strlen(key);
 	while (g_env[++i])
-		if (ft_strncmp(g_env[i], key, len) == 0)
+		if (ft_strncmp(g_env[i], key, len) == 0 && g_env[i][len] == '=')
 			return (g_env[i] + len + 1);
 	return (0);
 }
