@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/26 14:07:42 by zfaria            #+#    #+#             */
-/*   Updated: 2019/05/13 11:16:30 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/05/14 10:53:21 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 
 void	die(char *str)
 {
-	ft_printf("%s", str);
 	disable_raw_mode();
+	ft_printf("%s", str);
 	exit(1);
 }
 
@@ -77,7 +77,7 @@ void	enable_raw_mode(void)
 	raw.c_cc[VTIME] = 0;
 	tcsetattr(2, TCSAFLUSH, &raw);
 	if (tgetent(NULL, get_env("TERM")) == -1)
-		die("bad env configuration");
+		die("bad env configuration\n");
 	setsignal();
 	ft_putstr_fd(tgetstr("ti", &tgb), 2);
 	ft_putstr_fd(tgetstr("vi", &tgb), 2);
