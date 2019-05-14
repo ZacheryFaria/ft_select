@@ -6,7 +6,7 @@
 /*   By: zfaria <zfaria@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 10:55:09 by zfaria            #+#    #+#             */
-/*   Updated: 2019/05/13 12:43:17 by zfaria           ###   ########.fr       */
+/*   Updated: 2019/05/14 10:58:26 by zfaria           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		can_fit(int longest, t_list *list, t_shell shell)
 
 	row = amount_per_row(longest, shell) - 1;
 	len = ft_lstlen(list);
-	if (len / row > shell.screen_rows)
+	if (row <= 0 || len / row > shell.screen_rows)
 		return (0);
 	return (1);
 }
